@@ -51,20 +51,6 @@ public class ACNodePaths {
 		}
 	}
 
-	/*public void name(List<Node> node_list,TestParams p) {
-		BottomUpNamer buNamer = new BottomUpNamer();
-		buNamer.setBottomUpChecksums(true,nodes, p);
-		for (int n = 0; n < 200; n++) {				
-			nodeliteralsummer.setliteralChecksums(nodes, p);
-			for (Node bn : node_list) {
-				if (bn.getNodeType() != Node.LITERAL) {
-					bn.setURI(bn.getLiteral_chksum());
-				}
-			}
-			setNewIRIs();
-		}
-	}*/
-
 	public void setNewIRIs() {
 		Map<String, Node> lchecksums = new HashMap<String, Node>();
 		for (Node bn : nodes) {
