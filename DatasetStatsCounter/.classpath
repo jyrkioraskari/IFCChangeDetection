@@ -17,6 +17,5 @@
 	<classpathentry kind="lib" path="C:/2014/java_libraries/jena/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry kind="lib" path="C:/2014/java_libraries/jena/xercesImpl-2.10.0.jar"/>
 	<classpathentry kind="lib" path="C:/2014/java_libraries/jena/xml-apis-1.4.01.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/FrequencyCounter_2014"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
