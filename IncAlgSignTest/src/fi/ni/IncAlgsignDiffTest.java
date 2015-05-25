@@ -79,7 +79,7 @@ public class IncAlgsignDiffTest {
 		double count=0;
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
-		System.out.println("Extended AlgSign");
+		System.out.println("Incremental AlgSign");
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
         IncAlgsignDiffTest hs=new IncAlgsignDiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
@@ -88,6 +88,8 @@ public class IncAlgsignDiffTest {
 		for(int n=0;n<10;n++)
 		{
 		  retVal ret=hs.test(p);
+		  ret=hs.test(p);
+		  ret=hs.test(p);
 		  if(chosen==null)
 			  chosen=ret;
 		  else

@@ -23,6 +23,7 @@ public class Node {
 	final static public int IRINODE = 1;
 	final static public int BLANKNODE = 2;
 	private int nodeType;
+	private int org_nodeType;
 
 	private boolean sameAs = false;
 	private String local_uri = "";
@@ -68,6 +69,7 @@ public class Node {
 				local_uri = node.asResource().getURI().toString();
 			}
 		}
+		org_nodeType=nodeType;
 	}
 
 	public Node(RDFNode node, String class_name, boolean sameAs) {
@@ -92,8 +94,18 @@ public class Node {
 				local_uri = node.asResource().getURI().toString();
 			}
 		}
+		org_nodeType=nodeType;
 	}
 	
+	public void reset()
+	{
+		nodeType=org_nodeType;
+		collided=false;
+		
+       if (nodeType == BLANKNODE) {
+	       local_uri = null;		
+		}
+	}
 	public String getRDFClass_name() {
 		if (class_name == null)
 			class_name = "unknown";

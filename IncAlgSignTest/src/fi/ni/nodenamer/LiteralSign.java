@@ -2,14 +2,12 @@ package fi.ni.nodenamer;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import fi.ni.TestParams;
 import fi.ni.nodenamer.datastructure.Connection;
 import fi.ni.nodenamer.datastructure.Node;
-import fi.ni.nodenamer.stats.ClassLiteralCksumBag;
 import fi.ni.util.StringChecksum;
 
 public class LiteralSign {
