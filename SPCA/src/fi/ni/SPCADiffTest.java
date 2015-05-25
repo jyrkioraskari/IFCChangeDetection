@@ -5,13 +5,14 @@ import java.util.Set;
 
 import fi.ni.nodenamer.DiffSubstraction;
 import fi.ni.nodenamer.datastructure.Node;
+import fi.ni.vo.DiffReportVO;
 
-public class HugeSign {
+public class SPCADiffTest {
 	
-	ACNodePaths gs1 = new ACNodePaths();
-	ACNodePaths gs2 = new ACNodePaths();
+	NodeNamer gs1 = new NodeNamer();
+	NodeNamer gs2 = new NodeNamer();
 	
-	public HugeSign(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
+	public SPCADiffTest(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
 		
 		if(type.equals("SAVED"))
 		{
@@ -27,7 +28,6 @@ public class HugeSign {
 		}
 		
 	}
-	
 	
 	
 	public retVal test(TestParams p) {
@@ -73,19 +73,13 @@ public class HugeSign {
 
 
 	static public void test(boolean report, int maxsteps, boolean useHash) {
-		long time1=System.currentTimeMillis(); 
-		double added_all=0;
-		double removed_all=0;
-		double count=0;
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
-		System.out.println("Extended AlgSign");
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
-        HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
-        //HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/b_testset/", "SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
-        
-		for(int n=0;n<10;n++)
+		System.out.println("Huge Extended Plus");
+		SPCADiffTest hs=new SPCADiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A2.ifc", "A3.ifc", "IFC");
+		for(int n=0;n<1000;n++)
 		{
 		  retVal ret=hs.test(p);
 		  if(chosen==null)
@@ -94,9 +88,6 @@ public class HugeSign {
 		  {
 			  if((n%10)==0)	
 				  System.out.println("Result: "+chosen.removed+" "+chosen.added+" n:"+n);
-			  added_all+=ret.added;
-			  removed_all+=ret.removed;
-			  count++;
 			  if(compValue>ret.getCompValue())
 			  {
 				 
@@ -108,15 +99,14 @@ public class HugeSign {
 			  }
 		  }
 		}
-		long time2=System.currentTimeMillis(); 
 		System.out.println("Result: "+chosen.removed+" "+chosen.added);
-		System.out.println("Removed avg: "+(removed_all/count));
-		System.out.println("Added avg: "+(added_all/count));
-		System.out.println("Time: "+(time2-time1));
 	}
 
 	public static void main(String[] args) {
 		test(true,3000, true);
 	}
 
+
 }
+
+

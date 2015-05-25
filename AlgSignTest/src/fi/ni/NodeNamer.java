@@ -1,6 +1,7 @@
 package fi.ni;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,15 +13,16 @@ import com.hp.hpl.jena.ontology.OntModel;
 import fi.ni.nodenamer.InternalModel;
 import fi.ni.nodenamer.LiteralSign;
 import fi.ni.nodenamer.RDFHandler;
+import fi.ni.nodenamer.datastructure.Connection;
 import fi.ni.nodenamer.datastructure.Node;
 
-public class ACNodePaths {
+public class NodeNamer {
 	Set<Node> nodes = new HashSet<Node>();
 
-	
+	final public LiteralSign nodeliteralsummer; 
 
-	public ACNodePaths() {
-		
+	public NodeNamer() {
+		nodeliteralsummer = new LiteralSign();
 	}
 
 	public void setInternalGraph(Set<Node> nodes) {
@@ -35,50 +37,26 @@ public class ACNodePaths {
 		im.handle(model, nodes);
 
 	}
-
-
-	public void name(List<Node> node_list,TestParams p) {
-		LiteralSign nodeliteralsummer = new LiteralSign();	
-		for (int n = 0; n < 200; n++) {				
-			nodeliteralsummer.setliteralChecksums(nodes, p);
-			for (Node bn : node_list) {
-				if (bn.getNodeType() != Node.LITERAL) {
-					bn.setURI(bn.getLiteral_chksum());
-				}
-			}
-			setNewIRIs();
-		}
+	
+	public void first_name(TestParams p) {
+		nodeliteralsummer.setliteralChecksums(nodes, p);		
 	}
 
-	public void setNewIRIs() {
-		Map<String, Node> lchecksums = new HashMap<String, Node>();
-		for (Node bn : nodes) {
-			bn.setCollided(false);
-		}
-		for (Node bn : nodes) {
-			Node ex = lchecksums.put(bn.getURI(), bn);
-			if (ex != null) {
-				ex.setCollided(true);
-				bn.setCollided(true);
-			}
-		}
-		for (Node bn : nodes) {
-			if (!bn.isCollided()) {
-				bn.setNodeType(Node.IRINODE);
-			}
-		}
-	}
+	
 
-
-	public void makeUnique(TestParams p) {
+	public void makeUnique() {
 
 		List<Node> node_list=new ArrayList<Node>();
 		for(Node n:nodes)
 			node_list.add(n);
 		java.util.Collections.shuffle(node_list);
 		
-        name(node_list,p);
 		
+		for (Node bn : node_list) {
+			if (bn.getNodeType() == Node.BLANKNODE) {	
+				bn.setURI(bn.getLiteral_chksum());
+			}
+		}
 		Map<String, Integer> class_inx = new HashMap<String, Integer>();
 		Map<String, Node> lchecksums = new HashMap<String, Node>();
 		for (Node bn : node_list) {

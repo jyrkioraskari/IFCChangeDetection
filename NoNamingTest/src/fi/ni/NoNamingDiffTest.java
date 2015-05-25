@@ -5,14 +5,13 @@ import java.util.Set;
 
 import fi.ni.nodenamer.DiffSubstraction;
 import fi.ni.nodenamer.datastructure.Node;
-import fi.ni.vo.DiffReportVO;
 
-public class HugeSPCA {
+public class NoNamingDiffTest {
 	
-	ACNodePaths gs1 = new ACNodePaths();
-	ACNodePaths gs2 = new ACNodePaths();
+	NodeNamer gs1 = new NodeNamer();
+	NodeNamer gs2 = new NodeNamer();
 	
-	public HugeSPCA(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
+	public NoNamingDiffTest(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
 		
 		if(type.equals("SAVED"))
 		{
@@ -29,11 +28,18 @@ public class HugeSPCA {
 		
 	}
 	
-	
-	public retVal test(TestParams p) {
+	public void name(TestParams p) {
 		
-		gs1.makeUnique(p);
-		gs2.makeUnique(p);
+		gs1.first_name(p);
+		gs2.first_name(p);
+	}
+
+	
+	
+	public retVal test() {
+		
+		gs1.makeUnique();
+		gs2.makeUnique();
 		
 
 		Set<String> statements1=new HashSet<String>();
@@ -71,23 +77,32 @@ public class HugeSPCA {
         return new retVal(removed,added);		
 	}
 
-
 	static public void test(boolean report, int maxsteps, boolean useHash) {
-		int compValue=Integer.MAX_VALUE;
-		retVal chosen=null;
+		long time1=System.currentTimeMillis(); 
+		double added_all=0;
+		double removed_all=0;
+		double count=0;
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
-		System.out.println("Huge Extended Plus");
-		HugeSPCA hs=new HugeSPCA("common","Tekla Structures",report,"C:/2014/a_testset/","A2.ifc", "A3.ifc", "IFC");
-		for(int n=0;n<1000;n++)
+
+		int compValue=Integer.MAX_VALUE;
+		retVal chosen=null;
+		System.out.println("AlgSign");
+        NoNamingDiffTest hs=new NoNamingDiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
+		//HugeSign hs=new HugeSign("common","Tekla Structures",report,"default", "Drum_A.ifc_v1_500.xml", "Drum_A.ifc_v2_500.xml", "SAVED");
+		//HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/b_testset/", "SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
+        hs.name(p);
+		for(int n=0;n<10;n++)
 		{
-		  retVal ret=hs.test(p);
+		  retVal ret=hs.test();
 		  if(chosen==null)
 			  chosen=ret;
 		  else
 		  {
-			  if((n%10)==0)	
 				  System.out.println("Result: "+chosen.removed+" "+chosen.added+" n:"+n);
+			  added_all+=ret.added;
+			  removed_all+=ret.removed;
+			  count++;
 			  if(compValue>ret.getCompValue())
 			  {
 				 
@@ -96,17 +111,20 @@ public class HugeSPCA {
 				  compValue=ret.getCompValue();
 				  System.out.println("");
 				  System.out.println("Result: "+chosen.removed+" "+chosen.added+" n:"+n);
+				  DiffSubstraction.doSimpleDiff(hs.gs1.getNodes(), hs.gs2.getNodes());
 			  }
 		  }
 		}
+		long time2=System.currentTimeMillis(); 
 		System.out.println("Result: "+chosen.removed+" "+chosen.added);
+		System.out.println("Removed avg: "+(removed_all/count));
+		System.out.println("Added avg: "+(added_all/count));
+		System.out.println("Time: "+(time2-time1));
 	}
+
 
 	public static void main(String[] args) {
 		test(true,3000, true);
 	}
 
-
 }
-
-

@@ -16,12 +16,12 @@ import fi.ni.nodenamer.RDFHandler;
 import fi.ni.nodenamer.SimpleNamer;
 import fi.ni.nodenamer.datastructure.Node;
 
-public class ACNodePaths {
+public class NodeNamer {
 	Set<Node> nodes = new HashSet<Node>();
 
 	final public AlgSignSummer nodeliteralsummer; 
 
-	public ACNodePaths() {
+	public NodeNamer() {
 		nodeliteralsummer = new AlgSignSummer();
 	}
 

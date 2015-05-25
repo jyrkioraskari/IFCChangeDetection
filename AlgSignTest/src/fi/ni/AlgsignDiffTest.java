@@ -6,12 +6,12 @@ import java.util.Set;
 import fi.ni.nodenamer.DiffSubstraction;
 import fi.ni.nodenamer.datastructure.Node;
 
-public class HugeSign {
+public class AlgsignDiffTest {
 	
-	ACNodePaths gs1 = new ACNodePaths();
-	ACNodePaths gs2 = new ACNodePaths();
+	NodeNamer gs1 = new NodeNamer();
+	NodeNamer gs2 = new NodeNamer();
 	
-	public HugeSign(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
+	public AlgsignDiffTest(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
 		
 		if(type.equals("SAVED"))
 		{
@@ -87,10 +87,9 @@ public class HugeSign {
 
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
-		System.out.println("AlgSign");
-        HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
-		//HugeSign hs=new HugeSign("common","Tekla Structures",report,"default", "Drum_A.ifc_v1_500.xml", "Drum_A.ifc_v2_500.xml", "SAVED");
-		//HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/b_testset/", "SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
+		System.out.println("AlgSign count");
+        AlgsignDiffTest hs=new AlgsignDiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
+        //HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/b_testset/", "SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
         hs.name(p);
 		for(int n=0;n<10;n++)
 		{
@@ -99,6 +98,7 @@ public class HugeSign {
 			  chosen=ret;
 		  else
 		  {
+			  if((n%1000)==0)	
 				  System.out.println("Result: "+chosen.removed+" "+chosen.added+" n:"+n);
 			  added_all+=ret.added;
 			  removed_all+=ret.removed;
@@ -111,7 +111,6 @@ public class HugeSign {
 				  compValue=ret.getCompValue();
 				  System.out.println("");
 				  System.out.println("Result: "+chosen.removed+" "+chosen.added+" n:"+n);
-				  DiffSubstraction.doSimpleDiff(hs.gs1.getNodes(), hs.gs2.getNodes());
 			  }
 		  }
 		}

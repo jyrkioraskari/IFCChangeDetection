@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.rdfcontext.signing.RDFC14Ner;
 
-public class CanonizationDiff {
+public class CanonizationDiffTest {
 
 	static public void test(String directory, String filename1,String filename2, String type) {
 

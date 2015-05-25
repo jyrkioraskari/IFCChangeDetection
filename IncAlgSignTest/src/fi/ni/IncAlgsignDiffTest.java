@@ -6,12 +6,12 @@ import java.util.Set;
 import fi.ni.nodenamer.DiffSubstraction;
 import fi.ni.nodenamer.datastructure.Node;
 
-public class HugeSign {
+public class IncAlgsignDiffTest {
 	
-	ACNodePaths gs1 = new ACNodePaths();
-	ACNodePaths gs2 = new ACNodePaths();
+	NodeNamer gs1 = new NodeNamer();
+	NodeNamer gs2 = new NodeNamer();
 	
-	public HugeSign(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
+	public IncAlgsignDiffTest(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
 		
 		if(type.equals("SAVED"))
 		{
@@ -28,18 +28,12 @@ public class HugeSign {
 		
 	}
 	
-	public void name(TestParams p) {
-		
-		gs1.first_name(p);
-		gs2.first_name(p);
-	}
-
 	
 	
-	public retVal test() {
+	public retVal test(TestParams p) {
 		
-		gs1.makeUnique();
-		gs2.makeUnique();
+		gs1.makeUnique(p);
+		gs2.makeUnique(p);
 		
 
 		Set<String> statements1=new HashSet<String>();
@@ -77,28 +71,28 @@ public class HugeSign {
         return new retVal(removed,added);		
 	}
 
+
 	static public void test(boolean report, int maxsteps, boolean useHash) {
 		long time1=System.currentTimeMillis(); 
 		double added_all=0;
 		double removed_all=0;
 		double count=0;
-		TestParams p = new TestParams(maxsteps, useHash);
-		System.out.println(p);
-
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
-		System.out.println("AlgSign count");
-        HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
+		System.out.println("Extended AlgSign");
+		TestParams p = new TestParams(maxsteps, useHash);
+		System.out.println(p);
+        IncAlgsignDiffTest hs=new IncAlgsignDiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
         //HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/b_testset/", "SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
-        hs.name(p);
+        
 		for(int n=0;n<10;n++)
 		{
-		  retVal ret=hs.test();
+		  retVal ret=hs.test(p);
 		  if(chosen==null)
 			  chosen=ret;
 		  else
 		  {
-			  if((n%1000)==0)	
+			  if((n%10)==0)	
 				  System.out.println("Result: "+chosen.removed+" "+chosen.added+" n:"+n);
 			  added_all+=ret.added;
 			  removed_all+=ret.removed;
@@ -120,7 +114,6 @@ public class HugeSign {
 		System.out.println("Added avg: "+(added_all/count));
 		System.out.println("Time: "+(time2-time1));
 	}
-
 
 	public static void main(String[] args) {
 		test(true,3000, true);
