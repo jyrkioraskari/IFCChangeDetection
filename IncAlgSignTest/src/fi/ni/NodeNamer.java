@@ -60,6 +60,8 @@ public class NodeNamer {
 			for(Node m:setNewIRIs())
 				if(m.getNodeType()==Node.BLANKNODE)
 				  node_set.add(m);
+			if(node_set.size()==0)
+				return;
 			//System.out.println("Node set size: "+node_set.size());
 		}
 		
