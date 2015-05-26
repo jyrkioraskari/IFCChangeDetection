@@ -7,9 +7,11 @@ import fi.ni.nodenamer.DiffSubstraction;
 import fi.ni.nodenamer.datastructure.Node;
 
 public class NoNamingDiffTest {
-	
-	NodeNamer gs1 = new NodeNamer();
-	NodeNamer gs2 = new NodeNamer();
+	long timestamp1;
+	long timestamp2;
+
+	NoNamingNodeNamer gs1 = new NoNamingNodeNamer();
+	NoNamingNodeNamer gs2 = new NoNamingNodeNamer();
 	
 	public NoNamingDiffTest(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
 		
@@ -25,7 +27,7 @@ public class NoNamingDiffTest {
 		    gs1.createInternalGraph(directory,filename1, type);
 			gs2.createInternalGraph(directory,filename2, type);
 		}
-		
+		timestamp1=System.nanoTime();
 	}
 	
 	public void name(TestParams p) {
@@ -41,7 +43,12 @@ public class NoNamingDiffTest {
 		gs1.makeUnique();
 		gs2.makeUnique();
 		
-
+		System.out.println("Graphs ready GC");
+		System.gc();
+		System.out.println("Graphs ready");
+		timestamp2=System.nanoTime();
+		
+		System.out.println("CPU time:"+((timestamp2-timestamp1)/100000000));
 		Set<String> statements1=new HashSet<String>();
 		Set<String> statements2=new HashSet<String>();
 		
@@ -88,11 +95,9 @@ public class NoNamingDiffTest {
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
 		System.out.println("AlgSign");
-        NoNamingDiffTest hs=new NoNamingDiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
-		//HugeSign hs=new HugeSign("common","Tekla Structures",report,"default", "Drum_A.ifc_v1_500.xml", "Drum_A.ifc_v2_500.xml", "SAVED");
-		//HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/b_testset/", "SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
+        NoNamingDiffTest hs=new NoNamingDiffTest("common","Default",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
         hs.name(p);
-		for(int n=0;n<10;n++)
+		for(int n=0;n<1;n++)
 		{
 		  retVal ret=hs.test();
 		  if(chosen==null)

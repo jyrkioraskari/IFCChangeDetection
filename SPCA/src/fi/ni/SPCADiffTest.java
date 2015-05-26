@@ -5,12 +5,13 @@ import java.util.Set;
 
 import fi.ni.nodenamer.DiffSubstraction;
 import fi.ni.nodenamer.datastructure.Node;
-import fi.ni.vo.DiffReportVO;
 
 public class SPCADiffTest {
-	
-	NodeNamer gs1 = new NodeNamer();
-	NodeNamer gs2 = new NodeNamer();
+	long timestamp1;
+	long timestamp2;
+
+	SPCANodeNamer gs1 = new SPCANodeNamer();
+	SPCANodeNamer gs2 = new SPCANodeNamer();
 	
 	public SPCADiffTest(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
 		
@@ -26,7 +27,7 @@ public class SPCADiffTest {
 		    gs1.createInternalGraph(directory,filename1, type);
 			gs2.createInternalGraph(directory,filename2, type);
 		}
-		
+		timestamp1=System.nanoTime();
 	}
 	
 	
@@ -35,7 +36,14 @@ public class SPCADiffTest {
 		gs1.makeUnique(p);
 		gs2.makeUnique(p);
 		
-
+		System.out.println("Graphs ready GC");
+		System.gc();
+		System.out.println("Graphs ready");
+		
+		timestamp2=System.nanoTime();
+		
+		System.out.println("CPU time:"+((timestamp2-timestamp1)/100000000));
+		
 		Set<String> statements1=new HashSet<String>();
 		Set<String> statements2=new HashSet<String>();
 		
@@ -77,9 +85,8 @@ public class SPCADiffTest {
 		retVal chosen=null;
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
-		System.out.println("Huge Extended Plus");
-		SPCADiffTest hs=new SPCADiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A2.ifc", "A3.ifc", "IFC");
-		for(int n=0;n<1000;n++)
+		SPCADiffTest hs=new SPCADiffTest("common","Default",report,"C:/2014/a_testset/","A2.ifc", "A3.ifc", "IFC");
+		for(int n=0;n<1;n++)
 		{
 		  retVal ret=hs.test(p);
 		  if(chosen==null)

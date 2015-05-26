@@ -6,12 +6,14 @@ import java.util.Set;
 import fi.ni.nodenamer.DiffSubstraction;
 import fi.ni.nodenamer.datastructure.Node;
 
-public class IncAlgsignDiffTest {
+public class IncAlgSignDiffTest {
+	long timestamp1;
+	long timestamp2;
+
+	IncAlgsignNodeNamer gs1 = new IncAlgsignNodeNamer();
+	IncAlgsignNodeNamer gs2 = new IncAlgsignNodeNamer();
 	
-	NodeNamer gs1 = new NodeNamer();
-	NodeNamer gs2 = new NodeNamer();
-	
-	public IncAlgsignDiffTest(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
+	public IncAlgSignDiffTest(String codebase, String application_name, boolean report,String directory, String filename1, String filename2, String type) {
 		
 		if(type.equals("SAVED"))
 		{
@@ -25,7 +27,7 @@ public class IncAlgsignDiffTest {
 		    gs1.createInternalGraph(directory,filename1, type);
 			gs2.createInternalGraph(directory,filename2, type);
 		}
-		
+		timestamp1=System.nanoTime();
 	}
 	
 	
@@ -35,6 +37,13 @@ public class IncAlgsignDiffTest {
 		gs1.makeUnique(p);
 		gs2.makeUnique(p);
 		
+		System.out.println("Graphs ready GC");
+		System.gc();
+		System.out.println("Graphs ready");
+		
+		timestamp2=System.nanoTime();
+		
+		System.out.println("CPU time:"+((timestamp2-timestamp1)/100000000));
 
 		Set<String> statements1=new HashSet<String>();
 		Set<String> statements2=new HashSet<String>();
@@ -82,10 +91,10 @@ public class IncAlgsignDiffTest {
 		System.out.println("Incremental AlgSign");
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
-        IncAlgsignDiffTest hs=new IncAlgsignDiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
+        IncAlgSignDiffTest hs=new IncAlgSignDiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
         //HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/b_testset/", "SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
         
-		for(int n=0;n<10;n++)
+		for(int n=0;n<1;n++)
 		{
 		  retVal ret=hs.test(p);
 		  ret=hs.test(p);

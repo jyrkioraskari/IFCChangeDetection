@@ -16,12 +16,12 @@ import fi.ni.nodenamer.RDFHandler;
 import fi.ni.nodenamer.datastructure.Connection;
 import fi.ni.nodenamer.datastructure.Node;
 
-public class NodeNamer {
+public class NoNamingNodeNamer {
 	Set<Node> nodes = new HashSet<Node>();
 
 	final public LiteralSign nodeliteralsummer; 
 
-	public NodeNamer() {
+	public NoNamingNodeNamer() {
 		nodeliteralsummer = new LiteralSign();
 	}
 
@@ -57,6 +57,7 @@ public class NodeNamer {
 				bn.setURI(bn.getLiteral_chksum());
 			}
 		}
+		countUniques();
 		Map<String, Integer> class_inx = new HashMap<String, Integer>();
 		Map<String, Node> lchecksums = new HashMap<String, Node>();
 		for (Node bn : node_list) {
@@ -84,6 +85,39 @@ public class NodeNamer {
 		}
 	}
 
+	public void countUniques() {
+
+		double all=0;
+		double col=0;
+		Map<String, Integer> class_inx = new HashMap<String, Integer>();
+		Map<String, Node> lchecksums = new HashMap<String, Node>();
+		for (Node bn : nodes) {
+			bn.setCollided(false);
+		}
+		for (Node bn : nodes) {
+			Node ex = lchecksums.put(bn.getURI(), bn);
+			if (ex != null) {
+				 ex.setCollided(true);
+				 bn.setCollided(true);
+			}
+		}
+		for (Node bn : nodes) {
+			all++;
+			if (bn.isCollided()) {
+				{
+					col++;
+					Integer count = class_inx.get(bn.getURI());
+					if (count == null)
+						count = 0;
+					class_inx.put(bn.getURI(), count + 1);
+					if (count != 0) // to be comparable with 0 count, when 1
+									// removed from list of 2 items
+						bn.setURI(bn.getURI() + ".#" + count);
+				}
+			}
+		}
+		System.out.println("Unique count: "+(col/all));
+	}
 
 	public Set<Node> getNodes() {
 		return nodes;
