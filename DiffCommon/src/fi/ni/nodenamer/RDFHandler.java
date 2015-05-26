@@ -95,8 +95,8 @@ public class RDFHandler {
 				continue;
 			if (stmt.getPredicate().getURI().contains("domain"))
 				continue;
-			//if (stmt.getPredicate().getURI().contains("ownerHistory"))
-			//	continue;
+			if (stmt.getPredicate().getURI().contains("ownerHistory"))
+				continue;
 
 			model.add(stmt);
 		}

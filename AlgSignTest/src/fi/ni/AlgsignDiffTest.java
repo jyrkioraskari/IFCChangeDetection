@@ -48,7 +48,7 @@ public class AlgsignDiffTest {
 		System.out.println("Graphs ready");
 		timestamp2=System.nanoTime();
 		
-		System.out.println("CPU time:"+((timestamp2-timestamp1)/100000000));
+		System.out.println("CPU time:"+((timestamp2-timestamp1)/1000000));
 		
 		Set<String> statements1=new HashSet<String>();
 		Set<String> statements2=new HashSet<String>();
@@ -85,18 +85,18 @@ public class AlgsignDiffTest {
         return new retVal(removed,added);		
 	}
 
-	static public void test(boolean report, int maxsteps, boolean useHash) {
+	static public void test(boolean report, boolean useHash) {
 		long time1=System.currentTimeMillis(); 
 		double added_all=0;
 		double removed_all=0;
 		double count=0;
-		TestParams p = new TestParams(maxsteps, useHash);
+		TestParams p = new TestParams(0, useHash);
 		System.out.println(p);
 
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
-		System.out.println("AlgSign count");
-        AlgsignDiffTest hs=new AlgsignDiffTest("common","Default",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
+		System.out.println("AlgSign");
+        AlgsignDiffTest hs=new AlgsignDiffTest("common","Default",report,"C:/2014/b_testset/","SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
         hs.name(p);
 		for(int n=0;n<1;n++)
 		{
@@ -130,7 +130,7 @@ public class AlgsignDiffTest {
 
 
 	public static void main(String[] args) {
-		test(true,3000, true);
+		test(true, true);
 	}
 
 }

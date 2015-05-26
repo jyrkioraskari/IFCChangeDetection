@@ -10,6 +10,9 @@ public class NoNamingDiffTest {
 	long timestamp1;
 	long timestamp2;
 
+	long timestamp1_ms;
+	long timestamp2_ms;
+	
 	NoNamingNodeNamer gs1 = new NoNamingNodeNamer();
 	NoNamingNodeNamer gs2 = new NoNamingNodeNamer();
 	
@@ -28,6 +31,7 @@ public class NoNamingDiffTest {
 			gs2.createInternalGraph(directory,filename2, type);
 		}
 		timestamp1=System.nanoTime();
+		timestamp1_ms=System.currentTimeMillis();
 	}
 	
 	public void name(TestParams p) {
@@ -47,8 +51,9 @@ public class NoNamingDiffTest {
 		System.gc();
 		System.out.println("Graphs ready");
 		timestamp2=System.nanoTime();
-		
-		System.out.println("CPU time:"+((timestamp2-timestamp1)/100000000));
+		timestamp2_ms=System.currentTimeMillis();
+		System.out.println("CPU time:"+((timestamp2-timestamp1)/1000000));
+		System.out.println("CPU time (ms):"+(timestamp2_ms-timestamp1_ms));
 		Set<String> statements1=new HashSet<String>();
 		Set<String> statements2=new HashSet<String>();
 		
@@ -94,8 +99,8 @@ public class NoNamingDiffTest {
 
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
-		System.out.println("AlgSign");
-        NoNamingDiffTest hs=new NoNamingDiffTest("common","Default",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
+		System.out.println("No naming test");
+        NoNamingDiffTest hs=new NoNamingDiffTest("common","Default",report,"C:/2014/b_testset/","SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
         hs.name(p);
 		for(int n=0;n<1;n++)
 		{

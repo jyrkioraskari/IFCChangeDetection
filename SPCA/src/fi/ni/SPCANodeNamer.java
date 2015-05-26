@@ -45,7 +45,7 @@ public class SPCANodeNamer {
 		SimpleNamer sn=new SimpleNamer();
 		for (Node bn : nodes) {
 			if (bn.getNodeType() == Node.BLANKNODE) {	
-				String psum=sn.getPSum(bn, 2);
+				String psum=sn.getPSum(bn, p.maxsteps);
 				bn.setURI(psum);
 			}
 		}

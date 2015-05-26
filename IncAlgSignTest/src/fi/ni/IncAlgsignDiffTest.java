@@ -43,7 +43,7 @@ public class IncAlgSignDiffTest {
 		
 		timestamp2=System.nanoTime();
 		
-		System.out.println("CPU time:"+((timestamp2-timestamp1)/100000000));
+		System.out.println("CPU time:"+((timestamp2-timestamp1)/1000000));
 
 		Set<String> statements1=new HashSet<String>();
 		Set<String> statements2=new HashSet<String>();
@@ -91,14 +91,12 @@ public class IncAlgSignDiffTest {
 		System.out.println("Incremental AlgSign");
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
-        IncAlgSignDiffTest hs=new IncAlgSignDiffTest("common","Tekla Structures",report,"C:/2014/a_testset/","A3.ifc", "A4.ifc", "IFC");
-        //HugeSign hs=new HugeSign("common","Tekla Structures",report,"C:/2014/b_testset/", "SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
+        IncAlgSignDiffTest hs=new IncAlgSignDiffTest("common","Default",report,"C:/2014/b_testset/","SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
         
 		for(int n=0;n<1;n++)
 		{
 		  retVal ret=hs.test(p);
-		  ret=hs.test(p);
-		  ret=hs.test(p);
+
 		  if(chosen==null)
 			  chosen=ret;
 		  else

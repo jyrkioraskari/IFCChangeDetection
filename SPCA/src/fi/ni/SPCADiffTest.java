@@ -42,7 +42,7 @@ public class SPCADiffTest {
 		
 		timestamp2=System.nanoTime();
 		
-		System.out.println("CPU time:"+((timestamp2-timestamp1)/100000000));
+		System.out.println("CPU time:"+((timestamp2-timestamp1)/1000000));
 		
 		Set<String> statements1=new HashSet<String>();
 		Set<String> statements2=new HashSet<String>();
@@ -85,7 +85,7 @@ public class SPCADiffTest {
 		retVal chosen=null;
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
-		SPCADiffTest hs=new SPCADiffTest("common","Default",report,"C:/2014/a_testset/","A2.ifc", "A3.ifc", "IFC");
+		SPCADiffTest hs=new SPCADiffTest("common","Default",report,"C:/2014/b_testset/","SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
 		for(int n=0;n<1;n++)
 		{
 		  retVal ret=hs.test(p);
@@ -110,7 +110,7 @@ public class SPCADiffTest {
 	}
 
 	public static void main(String[] args) {
-		test(true,3000, true);
+		test(true,2, true);
 	}
 
 
