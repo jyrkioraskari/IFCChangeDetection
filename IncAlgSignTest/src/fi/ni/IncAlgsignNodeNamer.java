@@ -49,7 +49,7 @@ public class IncAlgsignNodeNamer {
 		for(Node n:init_nodes)
 			  node_set.add(n);  // first all
 		//System.out.println("Org node set size: "+node_set.size());
-		for (int n = 0; n < 200; n++) {				
+		for (int n = 0; n < 20; n++) {				
 			nodeliteralsummer.setliteralChecksums(node_set, p);
 			for (Node bn : node_set) {
 				if (bn.getNodeType() != Node.LITERAL) {

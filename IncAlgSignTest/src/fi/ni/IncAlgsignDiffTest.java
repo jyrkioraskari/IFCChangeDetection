@@ -81,7 +81,7 @@ public class IncAlgSignDiffTest {
 	}
 
 
-	static public void test(boolean report, int maxsteps, boolean useHash) {
+	static public void test(boolean report, boolean useHash) {
 		long time1=System.currentTimeMillis(); 
 		double added_all=0;
 		double removed_all=0;
@@ -89,10 +89,10 @@ public class IncAlgSignDiffTest {
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
 		System.out.println("Incremental AlgSign");
-		TestParams p = new TestParams(maxsteps, useHash);
+		TestParams p = new TestParams(0, useHash);
 		System.out.println(p);
-        IncAlgSignDiffTest hs=new IncAlgSignDiffTest("common","Default",report,"C:/2014/b_testset/","SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
-        
+         IncAlgSignDiffTest hs=new IncAlgSignDiffTest("common","Default",report,"C:/2014/b_testset/","SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
+	        
 		for(int n=0;n<1;n++)
 		{
 		  retVal ret=hs.test(p);
@@ -125,7 +125,7 @@ public class IncAlgSignDiffTest {
 	}
 
 	public static void main(String[] args) {
-		test(true,3000, true);
+		test(true,true);
 	}
 
 }

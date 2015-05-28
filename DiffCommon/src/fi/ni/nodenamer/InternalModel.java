@@ -19,7 +19,8 @@ import fi.ni.nodenamer.datastructure.Connection;
 import fi.ni.nodenamer.datastructure.Node;
 
 public class InternalModel {
-
+	boolean METADATA_FILTERING=true; 
+	
 	Map<String, Set<String>> resclass = new HashMap<String, Set<String>>();
 
 	
@@ -51,8 +52,9 @@ public class InternalModel {
 				Node ns = new Node(stmt.getSubject(), s_class_name);
 
 				nodekeymap.put(stmt.getSubject() + "", ns);
-				//if (ns.getRDFClass_name().contains("IfcOwnerHistory"))
-				//	continue;
+				if(METADATA_FILTERING)
+				if (ns.getRDFClass_name().contains("IfcOwnerHistory"))
+					continue;
 				nodes.add(ns);
 
 				continue;
@@ -64,8 +66,8 @@ public class InternalModel {
 
 			String s_class_name = null;
 			Statement stmt = iter1.nextStatement(); // get next statement
-			//if (stmt.getPredicate().getLocalName().equals("type"))
-			//	continue;
+			if (stmt.getPredicate().getLocalName().equals("type"))
+				continue;
 
 			Node subject = nodekeymap.get(stmt.getSubject() + "");
 
@@ -97,8 +99,9 @@ public class InternalModel {
 				Node ns = new Node(stmt.getSubject(), s_class_name);
 
 				nodekeymap.put(stmt.getSubject() + "", ns);
-				//if (ns.getRDFClass_name().contains("IfcOwnerHistory"))
-				//	continue;
+				if(METADATA_FILTERING)
+				if (ns.getRDFClass_name().contains("IfcOwnerHistory"))
+					continue;
 				nodes.add(ns);
 
 			}
@@ -156,8 +159,9 @@ public class InternalModel {
 					else
 						no = new Node(stmt.getObject(), o_class_name);
 					nodekeymap.put(stmt.getObject() + "", no);
-					/*if (no.getRDFClass_name().contains("IfcOwnerHistory"))
-						continue;*/
+					if(METADATA_FILTERING)
+					if (no.getRDFClass_name().contains("IfcOwnerHistory"))
+						continue;
 					nodes.add(no);
 				}
 			}
@@ -187,10 +191,13 @@ public class InternalModel {
 			Node subject = nodekeymap.get(stmt.getSubject() + "");
 			Node object = nodekeymap.get(stmt.getObject() + "");
 			if ((subject != null) && (object != null)) {
-				/*if (subject.getRDFClass_name().contains("IfcOwnerHistory"))
+				if(METADATA_FILTERING)
+				if (subject.getRDFClass_name().contains("IfcOwnerHistory"))
 					continue;
+				
+				if(METADATA_FILTERING)
 				if (object.getRDFClass_name().contains("IfcOwnerHistory"))
-					continue;*/
+					continue;
 
 				if (object.getNodeType() == Node.LITERAL)
 					subject.addLiteralConnection(new Connection(stmt

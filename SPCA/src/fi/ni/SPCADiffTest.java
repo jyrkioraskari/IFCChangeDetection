@@ -83,12 +83,19 @@ public class SPCADiffTest {
 	static public void test(boolean report, int maxsteps, boolean useHash) {
 		int compValue=Integer.MAX_VALUE;
 		retVal chosen=null;
+		double added_all=0;
+		double removed_all=0;
+		double count=0;
+		
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
 		SPCADiffTest hs=new SPCADiffTest("common","Default",report,"C:/2014/b_testset/","SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
 		for(int n=0;n<1;n++)
 		{
 		  retVal ret=hs.test(p);
+		  added_all+=ret.added;
+		  removed_all+=ret.removed;
+		  count++;
 		  if(chosen==null)
 			  chosen=ret;
 		  else
@@ -107,6 +114,9 @@ public class SPCADiffTest {
 		  }
 		}
 		System.out.println("Result: "+chosen.removed+" "+chosen.added);
+		
+		System.out.println("Removed avg: "+(removed_all/count));
+		System.out.println("Added avg: "+(added_all/count));
 	}
 
 	public static void main(String[] args) {

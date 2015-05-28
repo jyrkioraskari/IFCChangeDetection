@@ -89,12 +89,12 @@ public class NoNamingDiffTest {
         return new retVal(removed,added);		
 	}
 
-	static public void test(boolean report, int maxsteps, boolean useHash) {
+	static public void test(boolean report, boolean useHash) {
 		long time1=System.currentTimeMillis(); 
 		double added_all=0;
 		double removed_all=0;
 		double count=0;
-		TestParams p = new TestParams(maxsteps, useHash);
+		TestParams p = new TestParams(0, useHash);
 		System.out.println(p);
 
 		int compValue=Integer.MAX_VALUE;
@@ -134,7 +134,7 @@ public class NoNamingDiffTest {
 
 
 	public static void main(String[] args) {
-		test(true,3000, true);
+		test(true,true);
 	}
 
 }
