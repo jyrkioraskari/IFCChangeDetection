@@ -65,7 +65,7 @@ public class BottomUpNamer {
 					potential.add(c.pointedNode());
 				}
 			}			
-			
+			else
 			if (n.getEdges_out().size() == 0) {
 					n.getAa().setBottomUp_chksum(sign(n));
 				
