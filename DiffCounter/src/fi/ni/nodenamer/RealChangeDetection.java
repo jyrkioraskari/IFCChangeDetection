@@ -125,14 +125,14 @@ public class RealChangeDetection {
 			System.out.println("-- "+u.getRDFClass_name()+" "+e.getProperty());
 			if(reached_nodes.contains(u))
 				continue;	
-			if(e.getProperty().equals("relatingMaterial"))
+			/*if(e.getProperty().equals("relatingMaterial"))
 				continue;
 			if(e.getProperty().equals("relatedElements"))
-				continue;
+				continue;*/
 			if(e.getProperty().equals("placementRelTo"))
 			  continue;
-			if(e.getProperty().equals("parentContext"))
-				continue;
+			/*if(e.getProperty().equals("parentContext"))
+				continue;*/
 			
 			if(u.getAa().isGuidBijection())
 			{

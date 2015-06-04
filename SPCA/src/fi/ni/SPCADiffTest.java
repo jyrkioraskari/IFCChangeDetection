@@ -89,7 +89,7 @@ public class SPCADiffTest {
 		
 		TestParams p = new TestParams(maxsteps, useHash);
 		System.out.println(p);
-		SPCADiffTest hs=new SPCADiffTest("common","Default",report,"C:/2014/b_testset/","SMC_Rakennus.ifc", "SMC_RakennusMuutettu.ifc", "IFC");
+		SPCADiffTest hs=new SPCADiffTest("common","Default",report,"C:/jo/","A4.n", "A4.n", "N3");
 		for(int n=0;n<1;n++)
 		{
 		  retVal ret=hs.test(p);

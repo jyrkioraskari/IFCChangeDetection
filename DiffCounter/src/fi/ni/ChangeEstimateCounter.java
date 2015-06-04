@@ -142,7 +142,7 @@ public class ChangeEstimateCounter {
 
 	static public void test() {
 
-		test("ArchiCAD", "ArchiCAD-64", "c:/2014/b_testset/","SMC_Rakennus.ifc","SMC_RakennusMuutettu.ifc", "IFC");
+		test("ArchiCAD", "ArchiCAD-64", "c:/2014/a_testset/","A3.ifc","A4.ifc", "IFC");
 		//test("ArchiCAD", "ArchiCAD-64", "c:/2014/a_testset/","A3.ifc","A4.ifc", "IFC");
 	}
 

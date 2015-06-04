@@ -55,69 +55,43 @@ public class BottomUpNamer {
     
 	
 
-	public void setBottomUpChecksums(Boolean useFullLiterals, Set<Node> nodes, TestParams params) {
+	public void setBottomUpChecksums(Set<Node> nodes, TestParams params) {
 
 		for (Node n : nodes) {
 			if (n.getRDFClass_name().equals("rdf:nil")) {
-				n.getAa().setBottomUp_chksum("NIL",n);
-				
-				n.getAa().setBottomUp_islet(true);
-				n.getAa().setBottomUp_islet_recnoiput(true);
+				n.getAa().setBottomUp_chksum("NIL");
 				n.getAa().setHasBottomUp_cksum(true);
+				for (Connection c : n.getEdges_in()) {
+					potential.add(c.pointedNode());
+				}
 			}			
 			
 			if (n.getEdges_out().size() == 0) {
-				if(useFullLiterals)
-					n.getAa().setBottomUp_chksum(sign(n),n);
-				else
-					n.getAa().setBottomUp_chksum(n.getLiteral_chksum(),n);
+					n.getAa().setBottomUp_chksum(sign(n));
 				
-			    n.getAa().setBottomUp_islet(true);
-				n.getAa().setBottomUp_islet_recnoiput(true);
 				n.getAa().setHasBottomUp_cksum(true);
 				for (Connection c : n.getEdges_in()) {
 					potential.add(c.pointedNode());
 				}
 			}
-			// Null
-			if (n.getEdges_out().size() == 1) {
-				for (Connection co : n.getEdges_out()) {
-					if (co.pointedNode().getRDFClass_name().equals("rdf:nil"))
-					{
-						if(useFullLiterals)
-							n.getAa().setBottomUp_chksum(sign(n),n);
-						else
-						    n.getAa().setBottomUp_chksum(n.getLiteral_chksum(),n);
-						
-					    n.getAa().setBottomUp_islet(true);
-						n.getAa().setBottomUp_islet_recnoiput(true);
-						n.getAa().setHasBottomUp_cksum(true);
-						for (Connection c : n.getEdges_in()) {
-							potential.add(c.pointedNode());
-						}
-					}
-				}		
-			}
+
 
 		}
 		
 
 
 		Queue<Node> t = new LinkedList<Node>();
-		for (int i = 0; i < 100; i++) {  
+		for (int i = 0; i < 10; i++) {  
 			t.clear();
 			for (Node n : potential) {
                 if(isDummy(n))
                 	continue;
 				boolean all = true;
-				boolean all_islet = true;
 				for (Connection c : n.getEdges_out()) {
 					try
 					{
 					if (!c.pointedNode().getAa().hasBottomUp_cksum())
 						all = false;
-					if (!c.pointedNode().getAa().isBottomUp_islet_recnoiput())
-						all_islet = false;
 					}
 					catch(Exception e)
 					{
@@ -125,29 +99,20 @@ public class BottomUpNamer {
 						System.exit(1);
 					}
 				}
-				if (all_islet) {					
-					if(n.getEdges_in().size()==1)
-						   n.getAa().setBottomUp_islet_recnoiput(true);
-					n.getAa().setBottomUp_islet(true);
-				}
+
 
 				if (all) {					
 					List<String> s = new ArrayList<String>();
-					Set<Node> bottomUPNodes = new HashSet<Node>(); 
+				
 					for (Connection c : n.getEdges_out()) {
 						s.add(c.pointedNode().getAa().getBottomUp_chksum());
-						bottomUPNodes.addAll(c.pointedNode().getAa().getBottomUPNodes());
 					}
 					Collections.sort(s);
 					StringChecksum sc = new StringChecksum(params.isUseHash());
-					if(useFullLiterals)
 					 sc.update(sign(n));
-					else
-					 sc.update(n.getLiteral_chksum());
-					bottomUPNodes.add(n);
 					for (String st : s)
 						sc.update(st);
-					n.getAa().setBottomUp_chksum(sc.getChecksumValue(),bottomUPNodes);
+					n.getAa().setBottomUp_chksum(sc.getChecksumValue());
 					n.getAa().setHasBottomUp_cksum(true);
 					for (Connection c : n.getEdges_in()) {
 						if (!c.pointedNode().getAa().hasBottomUp_cksum())

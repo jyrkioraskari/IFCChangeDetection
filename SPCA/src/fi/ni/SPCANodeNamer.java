@@ -41,7 +41,7 @@ public class SPCANodeNamer {
 	private void name(List<Node> node_list,TestParams p) {
 		nodeliteralsummer.setliteralChecksums(nodes, p);
 		BottomUpNamer buNamer = new BottomUpNamer();
-		buNamer.setBottomUpChecksums(true,nodes, p);
+		buNamer.setBottomUpChecksums(nodes, p);
 		SimpleNamer sn=new SimpleNamer();
 		for (Node bn : nodes) {
 			if (bn.getNodeType() == Node.BLANKNODE) {	

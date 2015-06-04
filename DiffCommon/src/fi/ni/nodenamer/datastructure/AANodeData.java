@@ -10,11 +10,9 @@ public class AANodeData {
 	private boolean changedGuid=false;
 	private boolean derivedChange=false;
 	
-	private boolean bottomUp_islet=false;  
-	private boolean bottomUp_islet_recnoiput=false;  // only one input recursively
+
 	private String bottomUp_chksum=" ";
 	private boolean hasBottomUp_cksum=false;
-	final private Set<Node> bottomUPNodes=new HashSet<Node>();
 	final private List<String> crossings=new ArrayList<String>();
 	private int cchksum_nodecount=0;
 	private double literal_prob=1;
@@ -51,10 +49,6 @@ public class AANodeData {
 		this.hasBottomUp_cksum = hasBottomUp_cksum;
 	}
 
-	public Set<Node> getBottomUPNodes() {
-		return bottomUPNodes;
-	}
-
 	
 	public List<String> getCrossings() {
 		return crossings;
@@ -76,35 +70,8 @@ public class AANodeData {
 		this.literal_prob = literal_prob;
 	}
 	
-	public void setBottomUp_chksum(String bottomUp_chksum,Node n) {
-		this.setBottomUp_chksum(bottomUp_chksum);
-		getBottomUPNodes().add(n);
-	}
-	public void setBottomUp_chksum(String bottomUp_chksum,Set<Node> nset) {
-		this.setBottomUp_chksum(bottomUp_chksum);
-		getBottomUPNodes().addAll(nset);
-	}
-
-	public int getBottomUp_nodeCount() {
-		return getBottomUPNodes().size();
-	}
-
-	public boolean isBottomUp_islet() {
-		return bottomUp_islet;
-	}
-
-	public void setBottomUp_islet(boolean bottomUp_islet) {
-		this.bottomUp_islet = bottomUp_islet;
-	}
-
-	public boolean isBottomUp_islet_recnoiput() {
-		return bottomUp_islet_recnoiput;
-	}
-
-	public void setBottomUp_islet_recnoiput(boolean bottomUp_islet_recnoiput) {
-		this.bottomUp_islet_recnoiput = bottomUp_islet_recnoiput;
-	}
-
+	
+	
 	public boolean isChangeSetGuid() {
 		return changedGuid;
 	}
